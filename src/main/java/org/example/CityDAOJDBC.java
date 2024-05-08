@@ -154,10 +154,11 @@ public class CityDAOJDBC implements CityDAO {
     @Override
     public int delete(City city) {
         String query = "delete from city where name like ?";
+        int rowDeleted = 0;
         try(Connection connection = MySqlConnection.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query)){
             preparedStatement.setString(1, city.getName());
-             int rowDeleted = preparedStatement.executeUpdate();
+              rowDeleted = preparedStatement.executeUpdate();
             if(rowDeleted > 0){
                 System.out.println("successfully deleted");
             }
@@ -165,7 +166,7 @@ public class CityDAOJDBC implements CityDAO {
             e.printStackTrace();
             System.out.println("city deleted successfully");
         }
-        return -1;
+        return rowDeleted;
     }
 }
 
